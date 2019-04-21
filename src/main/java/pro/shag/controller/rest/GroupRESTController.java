@@ -3,6 +3,8 @@ package pro.shag.controller.rest;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +22,8 @@ public class GroupRESTController {
     @Autowired
     GroupServiceMongoImpl groupService;
 
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK", response = List.class)})
     @RequestMapping("/list")
-    @ApiOperation("Gives all groups")
     List<Group> showAll(){
         return groupService.getAll();
     }
@@ -36,6 +38,8 @@ public class GroupRESTController {
         return groupService.getAllByName(name);
     }
 
+    @ApiOperation("Gives  group by id")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK", response = Group.class)})
     @RequestMapping("/{id}")
     Group getById(@PathVariable("id") String id){
         return groupService.get(id);

@@ -22,7 +22,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
     private static final String SWAGGER_API_VERSION = "1.0";
     private static final String LICENSE_TEXT = "License";
-    private static final String title = "Products REST API";
+    private static final String title = "Groups REST API";
     private static final String description = "RESTful API for Groups";
 
     private ApiInfo apiInfo() {
