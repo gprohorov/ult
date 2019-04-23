@@ -65,6 +65,7 @@ public class GroupServiceMongoImpl implements IGroupService {
     }
 
     public List<Group> getAll() {
+
         return this.repository.findAll();
     }
 
