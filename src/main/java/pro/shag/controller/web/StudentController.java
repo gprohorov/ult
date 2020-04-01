@@ -17,7 +17,7 @@ import pro.shag.service.student.impls.StudentServiceImpl;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Controller
+//@Controller
 public class StudentController {
 
     @Autowired

@@ -19,9 +19,11 @@ public class GroupServiceMongoImpl implements IGroupService {
 
     @Autowired
     GroupRepository repository;
+/*
 
     @Autowired
     StudentServiceImpl studentService;
+*/
 
     private List<Group> groups = new ArrayList<>(
             Arrays.asList(
@@ -34,7 +36,7 @@ public class GroupServiceMongoImpl implements IGroupService {
 
     @PostConstruct
     void init(){
-       // this.repository.saveAll(groups);
+       this.repository.saveAll(groups);
     }
 
     @Override
@@ -72,7 +74,7 @@ public class GroupServiceMongoImpl implements IGroupService {
     public Group getGroupByCurator(String curator){
         return this.repository.findByCuratorName(curator).get(0);
     }
-
+/*
     public Map<Group, Integer> getGroupsByAverageMark(){
         Map<Group, Double> sorted = new LinkedHashMap<>();
          Map<Group, Double> map = studentService.getAll().stream()
@@ -82,9 +84,9 @@ public class GroupServiceMongoImpl implements IGroupService {
                 .sorted(Map.Entry.<Group, Double>comparingByValue().reversed())
                 .forEachOrdered(entry-> sorted.put(entry.getKey(), entry.getValue()));
 
-
-
-
         return null;
     }
+
+   */
+
 }

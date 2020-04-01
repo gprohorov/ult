@@ -13,7 +13,7 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+//@Service
 public class StudentServiceImpl implements IStudentService {
 
     private static List<Student> students = new ArrayList<>();
