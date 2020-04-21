@@ -13,7 +13,7 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Service
+@Service
 public class StudentServiceImpl implements IStudentService {
 
     private static List<Student> students = new ArrayList<>();
@@ -24,24 +24,30 @@ public class StudentServiceImpl implements IStudentService {
     @Autowired
     StudentRepository repository;
 
-    @PostConstruct
+   // @PostConstruct
     void init(){
-        Group group1 = groupService.getAll().get(0);
-        Group group2 = groupService.getAll().get(1);
+        Group group0 = groupService.getAll().get(0);
+        Group group1 = groupService.getAll().get(1);
+        Group group2 = groupService.getAll().get(2);
 
-        Student stud1 = new Student("Ivan", group1, 70);
+        Student stud1 = new Student("Ivanov", group2, 70);
         Student stud2 = new Student("Tolia", group1, 88);
         Student stud3 = new Student("Yura", group2, 90);
-        Student stud4 = new Student("Nazar", group2,55);
+        Student stud4 = new Student("Nazar", group0,55);
 
         students.add(stud1);
         students.add(stud2);
         students.add(stud3);
         students.add(stud4);
 
-/*        repository.deleteAll();
-        repository.saveAll(students);
-        */
+    repository.deleteAll();
+      repository.saveAll(students);
+
+    }
+
+    public List<Student>  straightA(){
+
+        return  repository.findByMarkGreaterThanEqual(90);
     }
 
     @Override

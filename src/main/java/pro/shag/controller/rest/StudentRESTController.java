@@ -11,7 +11,7 @@ import pro.shag.service.student.impls.StudentServiceImpl;
 
 import java.util.List;
 
-//@RestController
+@RestController
 @RequestMapping("/api/student")
 @CrossOrigin("*")
 public class StudentRESTController {

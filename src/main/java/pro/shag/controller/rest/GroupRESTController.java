@@ -13,7 +13,7 @@ import pro.shag.service.group.impls.GroupServiceMongoImpl;
 
 import java.util.List;
 
-//@RestController
+@RestController
 @RequestMapping("/api/group")
 @CrossOrigin("*")
 @Api(value = "GroupControllerAPI", produces = MediaType.APPLICATION_JSON_VALUE)

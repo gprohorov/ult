@@ -11,8 +11,15 @@ import java.util.List;
 @Repository
 public interface GroupRepository extends MongoRepository<Group, String> {
 
+   // List<Group> findByName(String name);
+
+ //   List<Group> findByNameIsLike(String regex);
+    List<Group> findByCuratorName(String curator);
+
+
     List<Group> findByName(String name);
     List<Group> findByNameIsLike(String regex);
-    List<Group> findByCuratorName(String curator);
+  //  List<Group> findByNameAndAndCuratorNameAndCuratorNameIsContaining
+
 
 }

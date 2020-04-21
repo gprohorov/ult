@@ -2,6 +2,7 @@ package pro.shag.controller.web;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,10 +15,11 @@ import pro.shag.model.Student;
 import pro.shag.service.group.impls.GroupServiceMongoImpl;
 import pro.shag.service.student.impls.StudentServiceImpl;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-//@Controller
+@Controller
 public class StudentController {
 
     @Autowired
@@ -38,6 +40,7 @@ public class StudentController {
         return "studentList";
     }
 
+    //@PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/student/add", method = RequestMethod.GET)
     public String addStudent(Model model){
         StudentForm studentForm = new StudentForm();
@@ -59,7 +62,10 @@ public class StudentController {
         Student newStudent = new Student(studentForm.getId(), studentForm.getName(), group);
         studentService.create(newStudent);
         model.addAttribute("students", studentService.getAll());
-        return "studentList";
+        //return "studentList";
+        return "redirect:/student/list";
+
+        //  "redirect:/web/person/list"
     }
 
     @RequestMapping(value = "/student/delete/{id}", method = RequestMethod.GET)
@@ -79,12 +85,26 @@ public class StudentController {
                 .collect(Collectors.toMap(Group::getId, Group::getName));
 
 
+
+        String dflt = s.getGroup().getId();
+   /*     Map<String, String> mavs = new HashMap<>();
+        mavs.put(id, map.get(id));
+
+       map.entrySet().stream().forEach(entry ->{
+           //if(!entry.getKey().equals(id)){
+               mavs.put(entry.getKey(),entry.getValue());
+
+       });
+
+*/
         StudentForm studentForm = new StudentForm();
         studentForm.setId(s.getId());
         studentForm.setName(s.getName());
         studentForm.setGroup(s.getGroup().getName());
         model.addAttribute("studentForm", studentForm);
         model.addAttribute("mavs", mavs);
+        model.addAttribute("dflt", dflt);
+
         return "editStudent";
     }
 

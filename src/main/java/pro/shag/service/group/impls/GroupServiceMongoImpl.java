@@ -19,34 +19,46 @@ public class GroupServiceMongoImpl implements IGroupService {
 
     @Autowired
     GroupRepository repository;
-/*
+
 
     @Autowired
     StudentServiceImpl studentService;
-*/
+/**/
 
     private List<Group> groups = new ArrayList<>(
             Arrays.asList(
-                    new Group( "bbv1", "Vova"),
-                    new Group("zxc2", "Ivan"),
-                    new Group( "asd3", "Nata"),
-                    new Group( "ghj4", "Olya")
+                    new Group( "243 cк ПЗКС", "Vova"),
+                    new Group("241 МПУИК", "Ivan"),
+                    new Group( " 131 Психология", "Nata"),
+                    new Group( "543 Магистратура", "Olya")
             )
     );
 
-    @PostConstruct
+ //   @PostConstruct
     void init(){
-       this.repository.saveAll(groups);
+        this.repository.deleteAll();
+     this.repository.saveAll(groups);
     }
+
+    @Override
+    public Group getByName(String name) {
+
+                return this.getAll().stream()
+                        .filter(item-> item.getName().equals(name))
+                        .findFirst().orElse(null)
+                        ;
+    }
+/*
 
     @Override
     public Group getByName(String name) {
         return null;
     }
+*/
 
     @Override
     public List<Group> getAllByName(String name) {
-        return null;
+        return repository.findByName(name);
     }
 
     public Group create(Group group) {
@@ -74,19 +86,27 @@ public class GroupServiceMongoImpl implements IGroupService {
     public Group getGroupByCurator(String curator){
         return this.repository.findByCuratorName(curator).get(0);
     }
-/*
+
     public Map<Group, Integer> getGroupsByAverageMark(){
-        Map<Group, Double> sorted = new LinkedHashMap<>();
-         Map<Group, Double> map = studentService.getAll().stream()
-                .collect(Collectors.groupingBy(Student::getGroup,
-                     Collectors.averagingDouble(Student::getMark)));
-                map.entrySet().stream()
-                .sorted(Map.Entry.<Group, Double>comparingByValue().reversed())
-                .forEachOrdered(entry-> sorted.put(entry.getKey(), entry.getValue()));
+        Map<Group, Double> sorted = new LinkedHashMap<>(); // создет мэп : ключ группа, значение средний балл
+                                                           // пока что пустой
+
+         Map<Group, Double> map = studentService.getAll() //  получаем список всех студентов
+                 .stream()   //  делаем из него стрим
+                .collect(Collectors.groupingBy(Student::getGroup,  // собираем его в МЭП, где ключ это группа как объект
+                     Collectors.averagingDouble(Student::getMark)));  //  а значение оцена mark  причем агрегацмя СРЕДНЕЕ
+
+                map.entrySet()  // из мэпа делаем Энтри Сэт
+                        .stream()  // денлаем стрим
+                .sorted(Map.Entry.<Group, Double>comparingByValue().reversed()) //  сортируем по ЗНАЧЕНИЮ (value) реверс
+                .forEachOrdered(entry-> sorted.put(entry.getKey(), entry.getValue())); // заполняем пустой энтри сэт 91 строки
+
 
         return null;
     }
 
-   */
+
+
+   /**/
 
 }

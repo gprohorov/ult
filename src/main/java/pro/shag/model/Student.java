@@ -10,6 +10,7 @@ public class Student {
     private String name;
     private Group group;
     private int mark;
+    private boolean active;
 
     public Student(String name, Group group) {
         this.name = name;
