@@ -17,8 +17,10 @@ import pro.shag.service.student.impls.StudentServiceImpl;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
+@RequestMapping("/web/student")
 @Controller
 public class StudentController {
 
@@ -34,14 +36,15 @@ public class StudentController {
         return "index";
     }
 
-    @RequestMapping(value = "/student/list", method = RequestMethod.GET)
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String studentList(Model model){
         model.addAttribute("students", studentService.getAll());
         return "studentList";
     }
 
-    //@PreAuthorize("hasAuthority('ADMIN')")
-    @RequestMapping(value = "/student/add", method = RequestMethod.GET)
+   @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addStudent(Model model){
         StudentForm studentForm = new StudentForm();
 
@@ -53,40 +56,53 @@ public class StudentController {
         return "addStudent";
     }
 
-    @RequestMapping(value = "/student/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addStudent(Model model,
                              @ModelAttribute("studentForm") StudentForm studentForm){
 
         Group group = groupService.get(studentForm.getGroup());
 
+        String name = studentForm.getName();
+
+ /*        Pattern pattern = Pattern.compile("^[A-Z][a-z]{2,10}");
+        Matcher matcher = pattern.matcher(name);
+
+        if(!matcher.matches()) {
+
+            System.out.println("Incorrect name");
+            return null;}
+*/
+
         Student newStudent = new Student(studentForm.getId(), studentForm.getName(), group);
+
+
         studentService.create(newStudent);
         model.addAttribute("students", studentService.getAll());
         //return "studentList";
-        return "redirect:/student/list";
+        return "redirect:/web/student/list";
 
         //  "redirect:/web/person/list"
     }
 
-    @RequestMapping(value = "/student/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteStudent(Model model, @PathVariable("id") String id){
 
         studentService.delete(id);
 
-        model.addAttribute("students", studentService.getAll());
-        return "studentList";
+       // model.addAttribute("students", studentService.getAll());
+        return "redirect:/web/student/list";
     }
 
-    @RequestMapping(value = "/student/edit/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editStudent(Model model, @PathVariable("id") String id){
 
-        Student s = studentService.get(id);
+        Student student = studentService.get(id);
         Map<String, String> mavs = groupService.getAll().stream()
                 .collect(Collectors.toMap(Group::getId, Group::getName));
 
 
 
-        String dflt = s.getGroup().getId();
+        String dflt = student.getGroup().getId();
    /*     Map<String, String> mavs = new HashMap<>();
         mavs.put(id, map.get(id));
 
@@ -98,9 +114,9 @@ public class StudentController {
 
 */
         StudentForm studentForm = new StudentForm();
-        studentForm.setId(s.getId());
-        studentForm.setName(s.getName());
-        studentForm.setGroup(s.getGroup().getName());
+        studentForm.setId(id);
+        studentForm.setName(student.getName());
+        studentForm.setGroup(student.getGroup().getName());
         model.addAttribute("studentForm", studentForm);
         model.addAttribute("mavs", mavs);
         model.addAttribute("dflt", dflt);
@@ -108,7 +124,7 @@ public class StudentController {
         return "editStudent";
     }
 
-    @RequestMapping(value = "/student/edit/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
     public String editStudent(Model model,
                              @ModelAttribute("studentForm") StudentForm studentForm,
                               @PathVariable("id") String id){
@@ -120,7 +136,7 @@ public class StudentController {
         s.setName(studentForm.getName());
         s.setGroup(group);
         studentService.update(s);
-        model.addAttribute("studentForm", studentForm);
-        return "studentList";
+      //  model.addAttribute("studentForm", studentForm);
+        return "redirect:/web/student/list";
     }
 }
