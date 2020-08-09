@@ -17,6 +17,7 @@
             <tr>
                 <th>Name</th>
                 <th>Group</th>
+                <th>Mark</th>
                 <th>Delete</th>
                 <th>Edit</th>
             </tr>
@@ -24,6 +25,7 @@
                 <tr>
                     <td>${student.name}</td>
                     <td>${student.group.name}</td>
+                    <td>${student.mark}</td>
                     <td><a href="/web/student/delete/${student.id}">Delete</a></td>
                     <td><a href="/web/student/edit/${student.id}">Edit</a></td>
                 </tr>

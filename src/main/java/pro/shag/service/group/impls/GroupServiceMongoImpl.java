@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import pro.shag.model.Group;
 import pro.shag.model.Student;
 import pro.shag.repository.GroupRepository;
+import pro.shag.repository.StudentRepository;
 import pro.shag.service.group.interfaces.IGroupService;
 import pro.shag.service.student.impls.StudentServiceImpl;
 
@@ -23,22 +24,8 @@ public class GroupServiceMongoImpl implements IGroupService {
 
     @Autowired
     StudentServiceImpl studentService;
+
 /**/
-
-    private List<Group> groups = new ArrayList<>(
-            Arrays.asList(
-                    new Group( "243 cк ПЗКС", "Vova"),
-                    new Group("241 МПУИК", "Ivan"),
-                    new Group( " 131 Психология", "Nata"),
-                    new Group( "543 Магистратура", "Olya")
-            )
-    );
-
- //   @PostConstruct
-    void init(){
-        this.repository.deleteAll();
-     this.repository.saveAll(groups);
-    }
 
     @Override
     public Group getByName(String name) {

@@ -135,6 +135,7 @@ public class StudentController {
         s.setId(studentForm.getId());
         s.setName(studentForm.getName());
         s.setGroup(group);
+        s.setMark(studentForm.getMark());
         studentService.update(s);
       //  model.addAttribute("studentForm", studentForm);
         return "redirect:/web/student/list";

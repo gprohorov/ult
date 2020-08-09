@@ -4,6 +4,10 @@ public class StudentForm {
     private String id;
     private String name;
     private String group;
+    private int mark;
+
+    public StudentForm() {
+    }
 
     public String getId() {
         return id;
@@ -29,12 +33,21 @@ public class StudentForm {
         this.group = group;
     }
 
+    public int getMark() {
+        return mark;
+    }
+
+    public void setMark(int mark) {
+        this.mark = mark;
+    }
+
     @Override
     public String toString() {
         return "StudentForm{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", group='" + group + '\'' +
+                ", mark=" + mark +
                 '}';
     }
 }

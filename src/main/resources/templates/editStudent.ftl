@@ -17,6 +17,8 @@
             <br>
             Group:<@spring.formSingleSelect "studentForm.group", mavs, ""/>
             <br>
+            Mark:<@spring.formInput "studentForm.mark" "" "text"/>
+            <br>
             <input type="submit" value="Edit"/>
         </form>
     </fieldset>
